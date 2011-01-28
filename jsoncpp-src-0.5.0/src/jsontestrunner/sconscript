@@ -6,4 +6,4 @@ buildJSONTests( env_testing, Split( """
     'jsontestrunner' )
 
 # For 'check' to work, 'libs' must be built first.
-env_testing.Depends('jsontestrunner', '#libs')
+env_testing.Depends('jsontestrunner', '#lib/release')

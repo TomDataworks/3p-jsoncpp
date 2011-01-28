@@ -7,4 +7,4 @@ buildUnitTests( env_testing, Split( """
     'test_lib_json' )
 
 # For 'check' to work, 'libs' must be built first.
-env_testing.Depends('test_lib_json', '#libs')
+env_testing.Depends('test_lib_json', '#lib/release')
