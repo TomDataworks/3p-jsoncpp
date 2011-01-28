@@ -11,6 +11,41 @@
       <string>LICENSES/jsoncpp.txt</string>
       <key>name</key>
       <string>jsoncpp</string>
+      <key>platforms</key>
+      <map>
+        <key>windows</key>
+        <map>
+          <key>build_directory</key>
+          <string>jsoncpp-src-0.5.0</string>
+          <key>configurations</key>
+          <map>
+            <key>Release</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>scons.py</string>
+                  <string>platform=msvc100</string>
+                </array>
+                <key>command</key>
+                <string>python</string>
+              </map>
+              <key>configure</key>
+              <map>
+                <key>command</key>
+                <string>""%VS100COMNTOOLS%vsvars32.bat""</string>
+              </map>
+              <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>Release</string>
+            </map>
+          </map>
+          <key>name</key>
+          <string>windows</string>
+        </map>
+      </map>
       <key>version</key>
       <string>0.5.0</string>
     </map>

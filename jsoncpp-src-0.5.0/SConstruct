@@ -42,7 +42,7 @@ print "Building using PLATFORM =", platform
 rootbuild_dir = Dir('#buildscons')
 build_dir = os.path.join( '#buildscons', platform )
 bin_dir = os.path.join( '#bin', platform )
-lib_dir = os.path.join( '#libs', platform )
+lib_dir = os.path.join( '#lib', 'release' )
 sconsign_dir_path = Dir(build_dir).abspath
 sconsign_path = os.path.join( sconsign_dir_path, '.sconsign.dbm' )
 
@@ -97,6 +97,11 @@ elif platform == 'msvc71':
         env.Tool( tool )
     env['CXXFLAGS']='-GR -GX /nologo /MT'
 elif platform == 'msvc80':
+    env['MSVS_VERSION']='8.0'
+    for tool in ['msvc', 'msvs', 'mslink', 'masm', 'mslib']:
+        env.Tool( tool )
+    env['CXXFLAGS']='-GR -EHsc /nologo /MT'
+elif platform == 'msvc100':
     env['MSVS_VERSION']='8.0'
     for tool in ['msvc', 'msvs', 'mslink', 'masm', 'mslib']:
         env.Tool( tool )
