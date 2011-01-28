@@ -13,10 +13,19 @@
       <string>jsoncpp</string>
       <key>platforms</key>
       <map>
-        <key>windows</key>
+        <key>common</key>
         <map>
           <key>build_directory</key>
           <string>jsoncpp-src-0.5.0</string>
+          <key>manifest</key>
+          <array>
+            <string>include/json/*.h</string>
+          </array>
+          <key>name</key>
+          <string>common</string>
+        </map>
+        <key>windows</key>
+        <map>
           <key>configurations</key>
           <map>
             <key>Release</key>
@@ -42,6 +51,10 @@
               <string>Release</string>
             </map>
           </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/release/*.lib</string>
+          </array>
           <key>name</key>
           <string>windows</string>
         </map>
