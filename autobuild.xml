@@ -53,6 +53,35 @@
           <key>name</key>
           <string>darwin</string>
         </map>
+        <key>linux</key>
+        <map>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>scons.py</string>
+                  <string>platform=linux-gcc</string>
+                </array>
+                <key>command</key>
+                <string>python</string>
+              </map>
+              <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/release/*.a</string>
+          </array>
+          <key>name</key>
+          <string>linux</string>
+        </map>
         <key>windows</key>
         <map>
           <key>configurations</key>
