@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<llsd>
+<map>
+    <key>package_description</key>
+    <map>
+      <key>description</key>
+      <string>jsoncpp is an implementation of a JSON (http://json.org) reader and writer in C++.</string>
+      <key>license</key>
+      <string>public domain</string>
+      <key>license_file</key>
+      <string>LICENSES/jsoncpp.txt</string>
+      <key>name</key>
+      <string>jsoncpp</string>
+      <key>version</key>
+      <string>0.5.0</string>
+    </map>
+    <key>type</key>
+    <string>autobuild</string>
+    <key>version</key>
+    <string>1.2</string>
+  </map>
+</llsd>
