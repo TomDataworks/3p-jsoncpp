@@ -102,7 +102,7 @@ elif platform == 'msvc80':
         env.Tool( tool )
     env['CXXFLAGS']='-GR -EHsc /nologo /MT'
 elif platform == 'msvc100':
-    env['MSVS_VERSION']='8.0'
+    env['MSVS_VERSION']='10.0'
     for tool in ['msvc', 'msvs', 'mslink', 'masm', 'mslib']:
         env.Tool( tool )
     env['CXXFLAGS']='-GR -EHsc /nologo /MT'
