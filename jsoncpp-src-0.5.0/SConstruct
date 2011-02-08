@@ -106,6 +106,12 @@ elif platform == 'msvc100':
     for tool in ['msvc', 'msvs', 'mslink', 'masm', 'mslib']:
         env.Tool( tool )
     env['CXXFLAGS']='-GR -EHsc /nologo /MD /Zc:wchar_t-'
+elif platform == 'msvc100debug':
+    env['MSVS_VERSION']='10.0'
+    lib_dir = os.path.join( '#lib', 'debug' )
+    for tool in ['msvc', 'msvs', 'mslink', 'masm', 'mslib']:
+        env.Tool( tool )
+    env['CXXFLAGS']='-GR -EHsc /nologo /MDd /Zc:wchar_t-'
 elif platform == 'mingw':
     env.Tool( 'mingw' )
     env.Append( CPPDEFINES=[ "WIN32", "NDEBUG", "_MT" ] )
