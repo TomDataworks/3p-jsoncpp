@@ -35,7 +35,7 @@
                 <key>arguments</key>
                 <array>
                   <string>scons.py</string>
-                  <string>platform=linux-gcc</string>
+                  <string>platform=darwin</string>
                 </array>
                 <key>command</key>
                 <string>python</string>

@@ -1,0 +1,12 @@
+glob:*.pyc
+glob:*.o
+glob:*.os
+glob:*.a
+glob:*.dylib
+glob:*.tar.gz
+glob:*.tar.bz2
+jsoncpp-src-0.5.0/bin/darwin/jsontestrunner
+jsoncpp-src-0.5.0/bin/darwin/test_lib_json
+jsoncpp-src-0.5.0/buildscons/darwin/.sconsign.dbm.dblite
+jsoncpp-src-0.5.0/buildscons/darwin/src/jsontestrunner/jsontestrunner
+jsoncpp-src-0.5.0/buildscons/darwin/src/test_lib_json/test_lib_json
