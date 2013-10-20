@@ -139,6 +139,63 @@
           <key>name</key>
           <string>windows</string>
         </map>
+        <key>windows64</key>
+        <map>
+          <key>configurations</key>
+          <map>
+            <key>Debug</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>scons.py</string>
+                  <string>platform=msvc110debug</string>
+                </array>
+                <key>command</key>
+                <string>python</string>
+              </map>
+              <key>configure</key>
+              <map>
+                <key>command</key>
+                <string>"%VCINSTALLDIR%/bin/amd64/vcvars64.bat"</string>
+              </map>
+              <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>Debug</string>
+            </map>
+            <key>Release</key>
+            <map>
+              <key>build</key>
+              <map>
+                <key>arguments</key>
+                <array>
+                  <string>scons.py</string>
+                  <string>platform=msvc110</string>
+                </array>
+                <key>command</key>
+                <string>python</string>
+              </map>
+              <key>configure</key>
+              <map>
+                <key>command</key>
+                <string>"%VCINSTALLDIR%/bin/amd64/vcvars64.bat"</string>
+              </map>
+              <key>default</key>
+              <string>True</string>
+              <key>name</key>
+              <string>Release</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/release/*.lib</string>
+            <string>lib/debug/*.lib</string>
+          </array>
+          <key>name</key>
+          <string>windows64</string>
+        </map>
       </map>
       <key>version</key>
       <string>0.5.0</string>
