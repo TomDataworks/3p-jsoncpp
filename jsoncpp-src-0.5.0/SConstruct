@@ -162,7 +162,7 @@ elif platform.startswith('linux-gcc'):
     env['SHARED_LIB_ENABLED'] = False
 elif platform.startswith('darwin'):
     env.Tool( 'default' )
-    env.Append( LIBS = ['pthread'], CCFLAGS = "-Wall" )
+    env.Append( LIBS = ['pthread'], CCFLAGS = "-Wall -arch i386 -arch x86_64", LINKFLAGS="-arch i386 -arch x86_64" )
     env['SHARED_LIB_ENABLED'] = True
 else:
     print "UNSUPPORTED PLATFORM."
