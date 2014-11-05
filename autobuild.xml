@@ -35,7 +35,7 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/release/*.a</string>
+            <string>include/*</string>
           </array>
           <key>name</key>
           <string>common</string>
