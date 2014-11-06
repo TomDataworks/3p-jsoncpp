@@ -24,7 +24,7 @@ set -x
 stage="$(pwd)/stage"
 LIBRARY_DIRECTORY_DEBUG=$stage/lib/debug
 LIBRARY_DIRECTORY_RELEASE=$stage/lib/release
-INCLUDE_DIRECTORY=$stage/include/jsoncpp
+INCLUDE_DIRECTORY=$stage/include/json
 mkdir -p "$LIBRARY_DIRECTORY_DEBUG"
 mkdir -p "$LIBRARY_DIRECTORY_RELEASE"
 mkdir -p "$INCLUDE_DIRECTORY"
@@ -41,7 +41,7 @@ case "$AUTOBUILD_PLATFORM" in
         cp -a lib/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
         cp -a include/json/*.h $INCLUDE_DIRECTORY
     ;;
-    "windows64")   
+    "windows64")
         load_vsvars
         cmake . -G"Visual Studio 12 Win64"
 		
@@ -52,10 +52,12 @@ case "$AUTOBUILD_PLATFORM" in
         cp -a lib/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
         cp -a include/json/*.h $INCLUDE_DIRECTORY
     ;;
-    darwin)
-
+    "darwin")
+        cmake -DCMAKE_OSX_ARCHITECTURES='i386;x86_64' -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
+        make
+        make install
     ;;
-    linux)
+    "linux")
 
     ;;
 esac
