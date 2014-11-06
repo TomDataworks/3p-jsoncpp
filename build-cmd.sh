@@ -24,7 +24,7 @@ set -x
 stage="$(pwd)/stage"
 LIBRARY_DIRECTORY_DEBUG=$stage/lib/debug
 LIBRARY_DIRECTORY_RELEASE=$stage/lib/release
-INCLUDE_DIRECTORY=$stage/include/json
+INCLUDE_DIRECTORY=$stage/include/jsoncpp
 mkdir -p "$LIBRARY_DIRECTORY_DEBUG"
 mkdir -p "$LIBRARY_DIRECTORY_RELEASE"
 mkdir -p "$INCLUDE_DIRECTORY"
@@ -56,6 +56,10 @@ case "$AUTOBUILD_PLATFORM" in
         cmake -DCMAKE_OSX_ARCHITECTURES='i386;x86_64' -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
         make
         make install
+        # Fudge this
+        mv "${stage}/include/json/"* "${stage}/include/jsoncpp"
+        rmdir "${stage}/include/json"
+        mv "${stage}/lib/libjsoncpp.a" "${stage}/lib/release/libjsoncpp.a"
     ;;
     "linux")
 
