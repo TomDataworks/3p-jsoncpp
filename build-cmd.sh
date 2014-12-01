@@ -61,8 +61,14 @@ case "$AUTOBUILD_PLATFORM" in
         rmdir "${stage}/include/json"
         mv "${stage}/lib/libjsoncpp.a" "${stage}/lib/release/libjsoncpp.a"
     ;;
-    "linux")
-
+    "linux64")
+        CFLAGS="-m64 -O3 -g -fPIC -DPIC" CXXFLAGS="-m64 -O3 -g -fPIC -DPIC" cmake -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
+        make
+        make install
+        # Fudge this
+        mv "${stage}/include/json/"* "${stage}/include/jsoncpp"
+        rmdir "${stage}/include/json"
+        mv "${stage}/lib/libjsoncpp.a" "${stage}/lib/release/libjsoncpp.a"
     ;;
 esac
 
