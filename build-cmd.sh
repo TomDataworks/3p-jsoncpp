@@ -62,7 +62,7 @@ case "$AUTOBUILD_PLATFORM" in
         mv "${stage}/lib/libjsoncpp.a" "${stage}/lib/release/libjsoncpp.a"
     ;;
     "linux64")
-        CFLAGS="-m64 -O3 -g -fPIC -DPIC" CXXFLAGS="-m64 -O3 -g -fPIC -DPIC" cmake -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
+        CFLAGS="-m64 -O3 -g -fPIC -DPIC" CXXFLAGS="-m64 -O3 -g -fPIC -DPIC -std=c++11" cmake -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
         make
         make install
         # Fudge this
