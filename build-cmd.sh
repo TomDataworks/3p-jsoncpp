@@ -21,7 +21,7 @@ set +x
 eval "$("$AUTOBUILD" source_environment)"
 set -x
 
-JSONCPP_VERSION="1.0.0"
+JSONCPP_VERSION="1.6.0"
 
 stage="$(pwd)/stage"
 LIBRARY_DIRECTORY_DEBUG=$stage/lib/debug
