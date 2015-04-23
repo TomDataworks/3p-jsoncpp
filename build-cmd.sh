@@ -42,8 +42,8 @@ case "$AUTOBUILD_PLATFORM" in
         build_sln "jsoncpp.sln" "Debug|Win32"
         build_sln "jsoncpp.sln" "Release|Win32"
 
-        cp -a lib/Debug/jsoncpp.lib $LIBRARY_DIRECTORY_DEBUG/jsoncppd.lib
-        cp -a lib/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
+        cp -a src/lib_json/Debug/jsoncpp.lib $LIBRARY_DIRECTORY_DEBUG/jsoncppd.lib
+        cp -a src/lib_json/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
         cp -a include/json/*.h $INCLUDE_DIRECTORY
     ;;
     "windows64")
@@ -53,8 +53,8 @@ case "$AUTOBUILD_PLATFORM" in
         build_sln "jsoncpp.sln" "Debug|x64"
         build_sln "jsoncpp.sln" "Release|x64"
 
-        cp -a lib/Debug/jsoncpp.lib $LIBRARY_DIRECTORY_DEBUG/jsoncppd.lib
-        cp -a lib/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
+        cp -a src/lib_json/Debug/jsoncpp.lib $LIBRARY_DIRECTORY_DEBUG/jsoncppd.lib
+        cp -a src/lib_json/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
         cp -a include/json/*.h $INCLUDE_DIRECTORY
     ;;
     "darwin")
