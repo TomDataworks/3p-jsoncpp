@@ -58,7 +58,8 @@ case "$AUTOBUILD_PLATFORM" in
         cp -a include/json/*.h $INCLUDE_DIRECTORY
     ;;
     "darwin")
-        cmake -DCMAKE_OSX_ARCHITECTURES='i386;x86_64' -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
+        cmake -DCMAKE_OSX_ARCHITECTURES='i386;x86_64' -DCMAKE_OSX_DEPLOYMENT_TARGET='10.8' \
+			-DCMAKE_CXX_FLAGS="-std=c++11 -stdlib=libc++" -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
         make
         make install
         # Fudge this
