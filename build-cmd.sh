@@ -39,8 +39,8 @@ case "$AUTOBUILD_PLATFORM" in
         load_vsvars
         cmake . -G"Visual Studio 14"
 		
-        build_sln "jsoncpp.sln" "Debug|Win32"
-        build_sln "jsoncpp.sln" "Release|Win32"
+        build_sln "jsoncpp.sln" "Debug" "Win32"
+        build_sln "jsoncpp.sln" "Release" "Win32"
 
         cp -a src/lib_json/Debug/jsoncpp.lib $LIBRARY_DIRECTORY_DEBUG/jsoncppd.lib
         cp -a src/lib_json/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
@@ -50,8 +50,8 @@ case "$AUTOBUILD_PLATFORM" in
         load_vsvars
         cmake . -G"Visual Studio 14 Win64"
 		
-        build_sln "jsoncpp.sln" "Debug|x64"
-        build_sln "jsoncpp.sln" "Release|x64"
+        build_sln "jsoncpp.sln" "Debug" "x64"
+        build_sln "jsoncpp.sln" "Release" "x64"
 
         cp -a src/lib_json/Debug/jsoncpp.lib $LIBRARY_DIRECTORY_DEBUG/jsoncppd.lib
         cp -a src/lib_json/Release/*.lib $LIBRARY_DIRECTORY_RELEASE
