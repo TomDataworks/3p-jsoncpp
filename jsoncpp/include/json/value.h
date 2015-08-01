@@ -37,21 +37,36 @@ namespace Json {
  *
  * We use nothing but these internally. Of course, STL can throw others.
  */
-class JSON_API Exception;
+class JSON_API Exception : public std::exception {
+public:
+  Exception(std::string const& msg);
+  virtual ~Exception() throw();
+  virtual char const* what() const throw();
+protected:
+  std::string const msg_;
+};
+
 /** Exceptions which the user cannot easily avoid.
  *
  * E.g. out-of-memory (when we use malloc), stack-overflow, malicious input
  * 
  * \remark derived from Json::Exception
  */
-class JSON_API RuntimeError;
+class JSON_API RuntimeError : public Exception {
+public:
+  RuntimeError(std::string const& msg);
+};
+
 /** Exceptions thrown by JSON_ASSERT/JSON_FAIL macros.
  *
  * These are precondition-violations (user bugs) and internal errors (our bugs).
  * 
  * \remark derived from Json::Exception
  */
-class JSON_API LogicError;
+class JSON_API LogicError : public Exception {
+public:
+  LogicError(std::string const& msg);
+};
 
 /// used internally
 void throwRuntimeError(std::string const& msg);
@@ -211,7 +226,7 @@ private:
     void swap(CZString& other);
 
     struct StringStorage {
-      DuplicationPolicy policy_: 2;
+      unsigned policy_: 2;
       unsigned length_: 30; // 1GB max
     };
 
@@ -255,7 +270,7 @@ Json::Value obj_value(Json::objectValue); // {}
 #endif // if defined(JSON_HAS_INT64)
   Value(double value);
   Value(const char* value); ///< Copy til first 0. (NULL causes to seg-fault.)
-  Value(const char* beginValue, const char* endValue); ///< Copy all, incl zeroes.
+  Value(const char* begin, const char* end); ///< Copy all, incl zeroes.
   /** \brief Constructs a value from a static string.
 
    * Like other value string constructor but do not duplicate the string for
@@ -306,7 +321,7 @@ Json::Value obj_value(Json::objectValue); // {}
    *  \return false if !string. (Seg-fault if str or end are NULL.)
    */
   bool getString(
-      char const** str, char const** end) const;
+      char const** begin, char const** end) const;
 #ifdef JSON_USE_CPPTL
   CppTL::ConstString asConstString() const;
 #endif
@@ -435,8 +450,8 @@ Json::Value obj_value(Json::objectValue); // {}
   Value get(const char* key, const Value& defaultValue) const;
   /// Return the member named key if it exist, defaultValue otherwise.
   /// \note deep copy
-  /// \param key may contain embedded nulls.
-  Value get(const char* key, const char* end, const Value& defaultValue) const;
+  /// \note key may contain embedded nulls.
+  Value get(const char* begin, const char* end, const Value& defaultValue) const;
   /// Return the member named key if it exist, defaultValue otherwise.
   /// \note deep copy
   /// \param key may contain embedded nulls.
@@ -448,12 +463,12 @@ Json::Value obj_value(Json::objectValue); // {}
 #endif
   /// Most general and efficient version of isMember()const, get()const,
   /// and operator[]const
-  /// \note As stated elsewhere, behavior is undefined if (end-key) >= 2^30
-  Value const* find(char const* key, char const* end) const;
+  /// \note As stated elsewhere, behavior is undefined if (end-begin) >= 2^30
+  Value const* find(char const* begin, char const* end) const;
   /// Most general and efficient version of object-mutators.
-  /// \note As stated elsewhere, behavior is undefined if (end-key) >= 2^30
+  /// \note As stated elsewhere, behavior is undefined if (end-begin) >= 2^30
   /// \return non-zero, but JSON_ASSERT if this is neither object nor nullValue.
-  Value const* demand(char const* key, char const* end);
+  Value const* demand(char const* begin, char const* end);
   /// \brief Remove and return the named member.
   ///
   /// Do nothing if it did not exist.
@@ -466,7 +481,7 @@ Json::Value obj_value(Json::objectValue); // {}
   /// \param key may contain embedded nulls.
   /// \deprecated
   Value removeMember(const std::string& key);
-  /// Same as removeMember(const char* key, const char* end, Value* removed),
+  /// Same as removeMember(const char* begin, const char* end, Value* removed),
   /// but 'key' is null-terminated.
   bool removeMember(const char* key, Value* removed);
   /** \brief Remove the named map member.
@@ -477,7 +492,7 @@ Json::Value obj_value(Json::objectValue); // {}
   */
   bool removeMember(std::string const& key, Value* removed);
   /// Same as removeMember(std::string const& key, Value* removed)
-  bool removeMember(const char* key, const char* end, Value* removed);
+  bool removeMember(const char* begin, const char* end, Value* removed);
   /** \brief Remove the indexed array element.
 
       O(n) expensive operations.
@@ -493,7 +508,7 @@ Json::Value obj_value(Json::objectValue); // {}
   /// \param key may contain embedded nulls.
   bool isMember(const std::string& key) const;
   /// Same as isMember(std::string const& key)const
-  bool isMember(const char* key, const char* end) const;
+  bool isMember(const char* begin, const char* end) const;
 #ifdef JSON_USE_CPPTL
   /// Return true if the object has a member named key.
   bool isMember(const CppTL::ConstString& key) const;
@@ -512,6 +527,7 @@ Json::Value obj_value(Json::objectValue); // {}
   //# endif
 
   /// \deprecated Always pass len.
+  JSONCPP_DEPRECATED("Use setComment(std::string const&) instead.")
   void setComment(const char* comment, CommentPlacement placement);
   /// Comments must be //... or /* ... */
   void setComment(const char* comment, size_t len, CommentPlacement placement);
@@ -652,9 +668,6 @@ public:
   typedef int difference_type;
   typedef ValueIteratorBase SelfType;
 
-  ValueIteratorBase();
-  explicit ValueIteratorBase(const Value::ObjectValues::iterator& current);
-
   bool operator==(const SelfType& other) const { return isEqual(other); }
 
   bool operator!=(const SelfType& other) const { return !isEqual(other); }
@@ -702,6 +715,12 @@ private:
   Value::ObjectValues::iterator current_;
   // Indicates that iterator is for a null value.
   bool isNull_;
+
+public:
+  // For some reason, BORLAND needs these at the end, rather
+  // than earlier. No idea why.
+  ValueIteratorBase();
+  explicit ValueIteratorBase(const Value::ObjectValues::iterator& current);
 };
 
 /** \brief const iterator for object and array value.

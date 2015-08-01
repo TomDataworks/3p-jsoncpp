@@ -29,8 +29,16 @@
 
 #if defined(_MSC_VER) && _MSC_VER < 1500 // VC++ 8.0 and below
 #define snprintf _snprintf
+#elif defined(__ANDROID__)
+#define snprintf snprintf
 #elif __cplusplus >= 201103L
 #define snprintf std::snprintf
+#endif
+
+#if defined(__BORLANDC__)  
+#include <float.h>
+#define isfinite _finite
+#define snprintf _snprintf
 #endif
 
 #if defined(_MSC_VER) && _MSC_VER >= 1400 // VC++ 8.0
@@ -317,8 +325,14 @@ void FastWriter::writeValue(const Value& value) {
     document_ += valueToString(value.asDouble());
     break;
   case stringValue:
-    document_ += valueToQuotedString(value.asCString());
+  {
+    // Is NULL possible for value.string_?
+    char const* str;
+    char const* end;
+    bool ok = value.getString(&str, &end);
+    if (ok) document_ += valueToQuotedStringN(str, static_cast<unsigned>(end-str));
     break;
+  }
   case booleanValue:
     document_ += valueToString(value.asBool());
     break;
@@ -340,7 +354,7 @@ void FastWriter::writeValue(const Value& value) {
       const std::string& name = *it;
       if (it != members.begin())
         document_ += ',';
-      document_ += valueToQuotedStringN(name.data(), name.length());
+      document_ += valueToQuotedStringN(name.data(), static_cast<unsigned>(name.length()));
       document_ += yamlCompatiblityEnabled_ ? ": " : ":";
       writeValue(value[name]);
     }
@@ -382,7 +396,7 @@ void StyledWriter::writeValue(const Value& value) {
     break;
   case stringValue:
   {
-    // Is NULL is possible for value.string_?
+    // Is NULL possible for value.string_?
     char const* str;
     char const* end;
     bool ok = value.getString(&str, &end);
@@ -599,8 +613,15 @@ void StyledStreamWriter::writeValue(const Value& value) {
     pushValue(valueToString(value.asDouble()));
     break;
   case stringValue:
-    pushValue(valueToQuotedString(value.asCString()));
+  {
+    // Is NULL possible for value.string_?
+    char const* str;
+    char const* end;
+    bool ok = value.getString(&str, &end);
+    if (ok) pushValue(valueToQuotedStringN(str, static_cast<unsigned>(end-str)));
+    else pushValue("");
     break;
+  }
   case booleanValue:
     pushValue(valueToString(value.asBool()));
     break;
@@ -893,7 +914,7 @@ void BuiltStyledStreamWriter::writeValue(Value const& value) {
         std::string const& name = *it;
         Value const& childValue = value[name];
         writeCommentBeforeValue(childValue);
-        writeWithIndent(valueToQuotedStringN(name.data(), name.length()));
+        writeWithIndent(valueToQuotedStringN(name.data(), static_cast<unsigned>(name.length())));
         *sout_ << colonSymbol_;
         writeValue(childValue);
         if (++it == members.end()) {
