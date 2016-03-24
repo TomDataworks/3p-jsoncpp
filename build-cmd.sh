@@ -67,8 +67,18 @@ case "$AUTOBUILD_PLATFORM" in
         rmdir "${stage}/include/json"
         mv "${stage}/lib/libjsoncpp.a" "${stage}/lib/release/libjsoncpp.a"
     ;;
+    "linux")
+        HARDENED="-fstack-protector -D_FORTIFY_SOURCE=2"
+        CFLAGS="-m32 -O3 -g $HARDENED -fPIC -DPIC" CXXFLAGS="-m32 -O3 -g $HARDENED -fPIC -DPIC -std=c++11" cmake -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
+        make
+        make install
+        # Fudge this
+        mv "${stage}/include/json/"* "${stage}/include/jsoncpp"
+        rmdir "${stage}/include/json"
+        mv "${stage}/lib/libjsoncpp.a" "${stage}/lib/release/libjsoncpp.a"
+    ;;
     "linux64")
-        HARDENED="-fstack-protector-strong -D_FORTIFY_SOURCE=2"
+        HARDENED="-fstack-protector -D_FORTIFY_SOURCE=2"
         CFLAGS="-m64 -O3 -g $HARDENED -fPIC -DPIC" CXXFLAGS="-m64 -O3 -g $HARDENED -fPIC -DPIC -std=c++11" cmake -DCMAKE_INSTALL_PREFIX:PATH="$stage" .
         make
         make install
