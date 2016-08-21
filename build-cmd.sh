@@ -37,7 +37,7 @@ pushd "jsoncpp"
 case "$AUTOBUILD_PLATFORM" in
     "windows")
         load_vsvars
-        cmake . -G"Visual Studio 14" -DCMAKE_SYSTEM_VERSION="10.0.10586.0"
+        cmake . -G"Visual Studio 14" -DCMAKE_SYSTEM_VERSION="10.0.14393.0"
 		
         build_sln "jsoncpp.sln" "Debug" "Win32"
         build_sln "jsoncpp.sln" "Release" "Win32"
@@ -48,7 +48,7 @@ case "$AUTOBUILD_PLATFORM" in
     ;;
     "windows64")
         load_vsvars
-        cmake . -G"Visual Studio 14 Win64" -DCMAKE_SYSTEM_VERSION="10.0.10586.0"
+        cmake . -G"Visual Studio 14 Win64" -DCMAKE_SYSTEM_VERSION="10.0.14393.0"
 		
         build_sln "jsoncpp.sln" "Debug" "x64"
         build_sln "jsoncpp.sln" "Release" "x64"
